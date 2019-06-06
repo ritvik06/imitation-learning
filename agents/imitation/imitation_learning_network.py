@@ -41,6 +41,7 @@ class Network(object):
         self._conv_strides = []
         self._weights = {}
         self._features = {}
+        self.count_normal = 0
 
     """ Our conv is currently using bias """
 
@@ -64,6 +65,12 @@ class Network(object):
         self._features['conv_block' + str(self._count_conv - 1)] = conv_res
 
         return conv_res
+
+    def normalisation(self,x,output_size):
+        self.count_normal += 1
+        return tf.contrib.layers.layer_norm(x,)
+
+
 
     def max_pool(self, x, ksize=3, stride=2):
         self._count_pool += 1
@@ -127,30 +134,31 @@ def load_imitation_learning_network(input_image, input_data, input_size, dropout
 
     x = input_image
 
+    arr = np.array(x)
+    shaper = arr.shape
+
+    for i in shaper[0]:
+        for j in shaper[1]:
+            x[i][j] = (x[i][j]/127.5) - 1
+
+    print("X normalised first")
+
     network_manager = Network(dropout, tf.shape(x))
 
     """conv1"""  # kernel sz, stride, num feature maps
-    xc = network_manager.conv_block(x, 5, 2, 32, padding_in='VALID')
+    xc = network_manager.conv_block(x, 5, 2, 24, padding_in='VALID')
     print(xc)
-    xc = network_manager.conv_block(xc, 3, 1, 32, padding_in='VALID')
+    xc = network_manager.conv_block(xc, 5, 2, 36, padding_in='VALID')
     print(xc)
 
     """conv2"""
-    xc = network_manager.conv_block(xc, 3, 2, 64, padding_in='VALID')
+    xc = network_manager.conv_block(xc, 5, 2, 48, padding_in='VALID')
     print(xc)
     xc = network_manager.conv_block(xc, 3, 1, 64, padding_in='VALID')
     print(xc)
 
     """conv3"""
-    xc = network_manager.conv_block(xc, 3, 2, 128, padding_in='VALID')
-    print(xc)
-    xc = network_manager.conv_block(xc, 3, 1, 128, padding_in='VALID')
-    print(xc)
-
-    """conv4"""
-    xc = network_manager.conv_block(xc, 3, 1, 256, padding_in='VALID')
-    print(xc)
-    xc = network_manager.conv_block(xc, 3, 1, 256, padding_in='VALID')
+    xc = network_manager.conv_block(xc, 3, 1, 64, padding_in='VALID')
     print(xc)
     """mp3 (default values)"""
 
@@ -159,11 +167,15 @@ def load_imitation_learning_network(input_image, input_data, input_size, dropout
     print(x)
 
     """ fc1 """
-    x = network_manager.fc_block(x, 512)
+    x = network_manager.fc_block(x, 100)
     print(x)
     """ fc2 """
-    x = network_manager.fc_block(x, 512)
-
+    x = network_manager.fc_block(x, 50)
+    print(x)
+    x = network_manager.fc_block(x, 10)
+    print(x)
+    
+    
     """Process Control"""
 
     """ Speed (measurements)"""
