@@ -74,26 +74,3 @@ They are stored on the "dataset" vector.
 27. Camera (Which camera was used) 
 28. Angle (The yaw angle for this camera)
 
-
-
-
-Paper
------
-
-If you use the conditional imitation learning, please cite our ICRA 2018 paper.
-
-End-to-end Driving via Conditional Imitation Learning. <br> Codevilla,
-Felipe and Müller, Matthias and López, Antonio and Koltun, Vladlen and
-Dosovitskiy, Alexey. ICRA 2018
-[[PDF](http://vladlen.info/papers/conditional-imitation.pdf)]
-
-
-```
-@inproceedings{Codevilla2018,
-  title={End-to-end Driving via Conditional Imitation Learning},
-  author={Codevilla, Felipe and M{\"u}ller, Matthias and L{\'o}pez,
-Antonio and Koltun, Vladlen and Dosovitskiy, Alexey},
-  booktitle={International Conference on Robotics and Automation (ICRA)},
-  year={2018},
-}
-
