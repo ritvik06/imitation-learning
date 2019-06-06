@@ -4,10 +4,12 @@ Conditional Imitation Learning at CARLA
 Repository to store the conditional imitation learning based
 AI that runs on carla. The trained model is the one used 
 on "CARLA: An Open Urban Driving Simulator" paper.
+I have tried the Nvidia end to end self-driving car model on the simulator
 
 Requirements
 -------
 tensorflow_gpu 1.1 or more
+keras built on tensorflow backend
 
 numpy
 
