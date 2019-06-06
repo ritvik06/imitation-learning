@@ -9,7 +9,6 @@ I have tried the Nvidia end to end self-driving car model on the simulator
 Requirements
 -------
 tensorflow_gpu 1.1 or more
-keras built on tensorflow backend
 
 numpy
 
